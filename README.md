@@ -9,3 +9,5 @@ conda activate et_precip_ppe
 python scripts/make_all_figures_main.py
 python scripts/make_all_figures_supp.py
 ```
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17933905.svg)](https://doi.org/10.5281/zenodo.17933905)
