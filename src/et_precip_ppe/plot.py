@@ -6,7 +6,7 @@ from matplotlib.colors import ListedColormap
 import cartopy.crs as ccrs
 from cartopy.util import add_cyclic_point
 
-import et_precip_ppe.src.et_precip_ppe.analyze as ppealyz
+import et_precip_ppe.analyze as ppealyz
 
 
 m_dict = {

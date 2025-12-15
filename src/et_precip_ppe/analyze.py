@@ -277,10 +277,6 @@ def mass_fraction_to_ppm(mass_fraction_species, molar_mass_species, molar_mass_a
     return mole_fraction * 1e6
 
 
-def weighted_average(da, weights):
-    return (da * weights).sum(dim=['lat', 'lon']) / weights.sum(dim=['lat', 'lon'])
-
-
 def co2_radiative_forcing(c, c_0):
     """ Table 8.SM.1 in Chapter 8: Anthropogenic and Natural Radiative Forcing, IPPC 2013 """
     return 5.35 * np.log(c / c_0)

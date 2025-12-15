@@ -1,0 +1,31 @@
+name: et-precip-ppe
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.11,<3.13
+  - pip
+
+  - numpy
+  - pandas
+  - xarray
+  - netcdf4
+  - h5netcdf
+  - scipy
+  - metpy
+  - xskillscore
+
+  - cftime
+  - dask
+  - distributed
+
+  - matplotlib
+  - cartopy
+  - cmocean
+
+  - jupyterlab
+  - ipykernel
+  - nbconvert
+
+  - pip:
+      - -e .
+      - watermark

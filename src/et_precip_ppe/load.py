@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 import xarray as xr
 
+import et_precip_ppe.paths as ppepath
+
 ### Constants ###
 
 # The CMIP6 models with the necessary abrupt-CO2 experiments
@@ -144,7 +146,7 @@ HADCM_VAR_DICT = {
 
 
 def get_cesm_crosswalk():
-    cesm_ppe_crosswalk = pd.read_csv("/glade/u/home/czarakas/coupled_PPE/code/02_set_up_ensemble/CLM5PPE_coupledPPE_crosswalk.csv")
+    cesm_ppe_crosswalk = pd.read_csv(f"{ppepath.CESM_PPE_CROSSWALK_DIR}/CLM5PPE_coupledPPE_crosswalk.csv")
 
     cesm_ppe_crosswalk = cesm_ppe_crosswalk.sort_values("key_coupledPPE")
 
@@ -175,7 +177,7 @@ def get_processed_type_labels(proc_type):
 
 
 def load_cmip_da(model, experiment, component, variable, subdir_name, proc_descr):
-    path = f"/glade/work/bbuchovecky/CMIP_analysis/{model}/{experiment}/{subdir_name}/"
+    path = f"{ppepath.CMIP6_POSTP_DIR}/{model}/{experiment}/{subdir_name}/"
     filename = f"{experiment}.{model}.{component}.{proc_descr}.{variable}.nc"
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -202,7 +204,7 @@ def get_cmip_abruptco2(model, component, variable, subdir_name, proc_descr):
 
 
 def load_cesm_da(variable, component, subdir_name, proc_descr, cam_grid):
-    inpath = f"/glade/work/bbuchovecky/PPE_analysis/{subdir_name}"
+    inpath = f"{ppepath.CESM_PPE_POSTP_DIR}/{subdir_name}"
 
     # Load ensemble and standard members
     ppe = xr.open_dataset(f"{inpath}/COUP_PPE.{component}.h0.{proc_descr}.{variable}.nc")[variable]
@@ -303,7 +305,7 @@ def get_cmip(varlist, proc_type):
         pi[model] = {}
 
         # Load array of gridcell weights
-        ds = xr.open_dataset(f"/glade/work/bbuchovecky/CMIP_analysis/{model}/weights/{model}_weights_atmgrid.nc")
+        ds = xr.open_dataset(f"{ppepath.CMIP6_POSTP_DIR}/{model}/weights/{model}_weights_atmgrid.nc")
         weights[model] = ds.copy(deep=True)
 
         for variable in varlist:
@@ -379,7 +381,7 @@ def get_cesm(varlist, proc_type, cam_grid=None):
         Dictionary with structure [variable] of processed CESM2 standard simulation output
     """
     # Source directory
-    inpath = "/glade/work/bbuchovecky/PPE_analysis"
+    inpath = ppepath.CESM_PPE_POSTP_DIR
 
     # Get the subdirectory name and file descriptor for the specified type of processed output
     subdir_name, proc_descr = get_processed_type_labels(proc_type)
@@ -484,7 +486,7 @@ def get_hadcm(varlist, scenario, proc_type):
         Dictionary with structure [variable] of processed HadCM3 standard simulation output
     """
     # Source directory
-    inpath = f"/glade/work/bbuchovecky/HadCM3_analysis/{scenario}"
+    inpath = f"{ppepath.HADCM_PPE_POSTP_DIR}/{scenario}"
 
     # Get the subdirectory name and file descriptor for the specified type of processed output
     subdir_name, proc_descr = get_processed_type_labels(proc_type)
