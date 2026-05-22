@@ -62,6 +62,7 @@ VAR_DESCR = {
     "FSNS":     "net surface shortwave flux",
     "FSNSC":    "clearsky net surface shortwave flux",
     "FSDSC":    "clearsky downwelling surface shortwave flux",
+    "SOILLIQ":  "soil liquid water (vegetated landunits only)",
 }
 
 # Map the CMIP variable names to the common variable names
@@ -116,6 +117,9 @@ CESM_VAR_DICT = {
     "FSNS": "FSNS",
     "FSNSC": "FSNSC",
     "FSDSC": "FSDSC",
+    "SOILLIQ": "SOILLIQ",
+    "TOTSOILLIQ": "TOTSOILLIQ",
+    "SOILWATER_10CM": "SOILWATER_10CM",
 }
 
 # Map the HadCM variable names to the common variable names
@@ -143,6 +147,18 @@ HADCM_VAR_DICT = {
 
 
 ### Helper functions ###
+
+
+def get_cesm_grid_weights():
+    cesm_weights = xr.open_dataset(ppepath.CESM_PPE_GRID_WEIGHTS, decode_timedelta=True).rename({"globweights": "globalweights"})
+    assert cesm_weights.landweights.sum(dim=["lat", "lon"]) == 1
+    return cesm_weights
+
+
+def get_hadcm_grid_weights():
+    hadcm_weights = xr.open_dataset(ppepath.HADCM_PPE_GRID_WEIGHTS, decode_timedelta=True)
+    assert hadcm_weights.landweights.sum(dim=["lat", "lon"]) == 1
+    return hadcm_weights
 
 
 def get_cesm_crosswalk():
@@ -405,9 +421,9 @@ def get_cesm(varlist, proc_type, cam_grid=None):
         cesm_variable = CESM_VAR_DICT[variable]
 
         # Get the correct model component
-        if cesm_variable == "RH2M":
+        if cesm_variable in ["RH2M", "SOILWATER_10CM", "TOTSOILLIQ"]:
             component = "clm2"
-        if cesm_variable != "RH2M":
+        else:
             component = "cam"
 
         # Check if the variable needs to be calculated
