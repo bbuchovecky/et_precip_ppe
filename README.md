@@ -1,4 +1,4 @@
-# Code for: "Reduced evapotranspiration and associated warming increase moisture convergence but decrease precipitation over land"
+# Code for: "Reduced Evapotranspiration Decreases Land Precipitation Despite Enhanced Moisture Convergence: Insights from Perturbed Parameter Ensembles of Earth System Models"
 
 Author: Ben Buchovecky
 
