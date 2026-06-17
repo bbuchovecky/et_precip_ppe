@@ -88,6 +88,7 @@ def ols_single(x, y, alpha=0.05):
     """ Wrapper of OLS for 1D arrays """
     out = _ols_single(x, y, alpha=alpha)
     slope, intercept, slope_se, intercept_se, slope_ci_halfwidth, slope_p_value = out
+    pearsonr = stats.pearsonr(x, y).statistic
     result = dict(
         slope=slope,
         intercept=intercept,
@@ -95,6 +96,7 @@ def ols_single(x, y, alpha=0.05):
         intercept_se=intercept_se,
         slope_ci_halfwidth=slope_ci_halfwidth,
         slope_p_value=slope_p_value,
+        pearsonr=pearsonr,
     )
     return result
 

@@ -7,7 +7,6 @@ Update the paths to model output in `src/et_precip_ppe/paths.py` then run the fo
 conda env create -f environment.yml
 conda activate et-precip-ppe
 python scripts/make_all_figures_main.py
-python scripts/make_all_figures_supp.py
 ```
 
 [![DOI](https://zenodo.org/badge/1117016829.svg)](https://doi.org/10.5281/zenodo.17945231)
